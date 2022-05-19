@@ -17,23 +17,23 @@
 #ifndef __GPIO_H
 #define __GPIO_H
 
-#include "stm32f10x.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_rcc.h"
-#include "clock.h"
+#include "stm32h7xx.h"
+#include "stm32h7xx_hal_gpio.h"
+#include "stm32h7xx_hal_rcc.h"
+//#include "clock.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define SDCARD_DETECT_Pin 				GPIO_Pin_1
+#define SDCARD_DETECT_Pin 				GPIO_Pin_3
 #define SDCARD_DETECT_GPIO_Port 	GPIOA
 
 #define SD_CS_Pin 								GPIO_Pin_4
 #define SD_CS_GPIO_Port 					GPIOA
 
 #define LED_GREEN_Pin 						GPIO_Pin_0
-#define LED_RED_Pin 							GPIO_Pin_1
+#define LED_RED_Pin 							GPIO_Pin_14
 
 #define LED_GREEN_GPIO_Port 			GPIOB
 #define LED_RED_GPIO_Port 				GPIOB

@@ -20,8 +20,8 @@ extern "C" {
 #endif
 
 
-#include "stm32f10x.h"
-#include "stm32f10x_spi.h"
+#include "stm32h7xx.h"
+#include "stm32h7xx_hal_spi.h"
 
 void initSpi(void);
 
