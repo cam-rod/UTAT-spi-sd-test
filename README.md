@@ -2,11 +2,12 @@
 
 ## Port Connections
 
-Detect Pin: A0 </br>
-SPI-B Top --> bottom </br>
-	MOSI </br>
-	SCK </br>
-	CS </br>
+Detect Pin : A0 </br>
+SPI-B Top --> Bottom :</br>
+	
+	MOSI 
+	SCK 
+	CS
 	MISO
 	
 [main resource](https://github.com/NimaMX/STM32F103-SDCARD)
