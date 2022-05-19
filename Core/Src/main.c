@@ -32,11 +32,22 @@
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
+
 /* USER CODE BEGIN PD */
 #include "sdcard.h"
 
 FATFS fatfs;
 FATFS *pfatfs;
+
+#ifdef __GNUC__
+/* With GCC, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#define GETCHAR_PROTOTYPE int __io_getchar()
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+
 // state Holders
 uint8_t state_mount = 0;
 uint8_t state_unmount = 0;
@@ -144,7 +155,19 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_SPI3_Init();
+
   /* USER CODE BEGIN 2 */
+
+  //InitSdcard();
+
+  FIL initFile;
+  char* tempBuffer = malloc(12*sizeof(char));
+
+  _mountSdcard();
+  _openfile("initialFile", READ_WRITE_FILE, &initFile);
+  _writeString("hello_world", &initFile);
+  _readString(tempBuffer, 12, &initFile);
+  printf(tempBuffer);
 
   /* USER CODE END 2 */
 
@@ -514,6 +537,30 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Retargets the C library printf and scanf functions to the UART.
+  * @param  None
+  * @retval None
+  */
+
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the LPUART1 and Loop until the end of transmission */
+  HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+
+GETCHAR_PROTOTYPE
+{
+	uint8_t ch;
+
+	HAL_UART_Receive(&huart3, &ch, 1, 0xFFFF);
+
+	return ch;
+}
+
 void clearBuffer(void)
 {
 	 for(int s = 0; s <= MAX_BUFFER; s++)
